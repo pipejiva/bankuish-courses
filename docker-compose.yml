@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - courses-mysql-data:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: dhcd78sfyhdsfgv87ddhc!dcusdf9
+      MYSQL_DATABASE: courses
+
+volumes:
+  courses-mysql-data:
