@@ -11,3 +11,5 @@ Add my
 Create table in database
 Impoert  loopback-connector-mysql
 yarn add loopback-connector-mysql
+yarn build
+lb4 discover --dataSource mysql  --schema courses
