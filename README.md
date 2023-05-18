@@ -100,4 +100,4 @@ API documentation is automatically generated using OpenAPI specifications. Start
 
 ## Support
 
-If you have any questions, issues, or feature requests, please contact me at [pipe2211@hotmail.com](mailto:pipe2211@hotmail.com).
+If you have any questions, issues, or feature requests, please contact me.
