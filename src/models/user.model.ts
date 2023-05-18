@@ -1,4 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {UserCourse} from './user-course.model';
 
 @model({settings: {idInjection: false, mysql: {schema: 'courses', table: 'User'}}})
@@ -55,6 +55,10 @@ export class User extends Entity {
 
   @hasMany(() => UserCourse)
   userCourses: UserCourse[];
+
+
+  @hasMany(() => UserCourse)
+  sortCourses: UserCourse[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

@@ -52,16 +52,17 @@ yarn start
 ```
 Open http://localhost:3000/explorer in your browser.
 
-## Populate database
-
-1. The application must be running and connected to the database
-2. Open the "GET" method http://localhost:3000/populate
 
 ## Authentication
 1. Open http://localhost:3000/explorer/#/TokenController/TokenController.generateToken in your browser.
 2. Write on the request body  `{"email": "pipe2211@hotmail.com"}`and click in execute
 3. Click on "Authorize" at the top of the page
 4. Paste the JWT in the field value
+
+## Populate database
+
+1. The application must be running and connected to the database
+2. Open the "GET" method http://localhost:3000/populate
 
 
 ## Build or rebuild the project

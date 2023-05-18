@@ -2,9 +2,7 @@ import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
+  Filter, repository,
   Where
 } from '@loopback/repository';
 import {
@@ -102,9 +100,8 @@ export class CourseController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Course, {exclude: 'where'}) filter?: FilterExcludingWhere<Course>
   ): Promise<Course> {
-    return this.courseRepository.findById(id, filter);
+    return this.courseRepository.findById(id);
   }
 
   @patch('/courses/{id}')

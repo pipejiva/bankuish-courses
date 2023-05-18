@@ -21,7 +21,7 @@ export class CoursePrerequisite extends Entity {
     generated: 0,
     mysql: {columnName: 'courseId', dataType: 'int', dataLength: null, dataPrecision: 10, dataScale: 0, nullable: 'Y', generated: 0},
   })
-  courseId?: number;
+  courseId: number;
 
   @property({
     type: 'number',

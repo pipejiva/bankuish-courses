@@ -1,10 +1,9 @@
 
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
+  Filter, repository,
   Where
 } from '@loopback/repository';
 import {
@@ -12,16 +11,18 @@ import {
   getModelSchemaRef, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
-import {User} from '../models';
-import {CoursePrerequisiteRepository, UserRepository} from '../repositories';
+import {User, UserCourse} from '../models';
+import {CoursePrerequisiteRepository, CourseRepository, UserRepository} from '../repositories';
 import {RecursiveMethod} from '../utils/recursiveMethod';
-
+@authenticate('jwt')
 export class UserController {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
     @repository(CoursePrerequisiteRepository)
     public coursePrerequisiteRepository: CoursePrerequisiteRepository,
+    @repository(CourseRepository)
+    public courseRepository: CourseRepository,
   ) { }
 
   @post('/users')
@@ -95,7 +96,7 @@ export class UserController {
 
   @get('/users/{id}')
   @response(200, {
-    description: 'User model instance',
+    description: 'Course model instance',
     content: {
       'application/json': {
         schema: getModelSchemaRef(User, {includeRelations: true}),
@@ -104,52 +105,37 @@ export class UserController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>
   ): Promise<User> {
-    const user = await this.userRepository.findById(id, filter);
-    const userCourses = user.userCourses;
-    console.log(userCourses);
+    return this.userRepository.findById(id);
+  }
 
-    const x = RecursiveMethod.callrecursive();
-    console.log(x);
-    const coursePrerequisites = await this.coursePrerequisiteRepository.find();
+  @get('/user-courses/{id}')
+  @response(200, {
+    description: 'User model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(User, {includeRelations: true}),
+      },
+    },
+  })
+  async findUserCoursesById(
+    @param.path.number('id') id: number,
+  ): Promise<User> {
+    let user = await this.userRepository.findById(id);
+    let courses = await this.courseRepository.find();
+    let prerequisitesList = await this.coursePrerequisiteRepository.find();
+    let orderedPrerequisitesIds = RecursiveMethod.convertToRecursiveList(prerequisitesList);
 
-    await new Promise<void>((resolve, reject) => {
-      coursePrerequisites.sort((a, b) => {
-        if (a.prerequisiteId < b.prerequisiteId) {
-          return -1;
-        }
-        if (a.prerequisiteId > b.prerequisiteId) {
-          return 1;
-        }
-        return 0;
-      });
-      resolve();
-    });
+    let sortedUserCourses = orderedPrerequisitesIds
+      .map(({courseId}) => courses.find(course => course.id === courseId))
+      .filter(course => course !== undefined) as UserCourse[];
 
+    for (let sortedCourse of sortedUserCourses) {
+      sortedCourse.title = courses.find(course => course.id === sortedCourse?.id)?.title;
+    }
 
-
-    await new Promise<void>((resolve, reject) => {
-      userCourses.sort((a, b) => {
-        const c = coursePrerequisites.findIndex(cp => cp.courseId === a.courseId);
-        const d = coursePrerequisites.findIndex(cp => cp.courseId === b.courseId);
-        if (c < d) {
-          return -1;
-        }
-        if (c > d) {
-          return 1;
-        }
-        return 0;
-      });
-      resolve();
-    });
-
-
-    console.log(userCourses);
-    console.log(coursePrerequisites);
+    user.sortCourses = sortedUserCourses;
     return user;
-
-
   }
 
   @patch('/users/{id}')

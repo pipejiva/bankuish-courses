@@ -50,7 +50,6 @@ export class BankuishCoursesApplication extends BootMixin(
       },
     };
 
-    console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
     this.component(AuthenticationComponent);
     this.component(JWTAuthenticationComponent);
     this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(FirebaseTokenService);
