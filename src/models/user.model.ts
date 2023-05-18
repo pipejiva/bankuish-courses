@@ -1,4 +1,4 @@
-import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
 import {UserCourse} from './user-course.model';
 
 @model({settings: {idInjection: false, mysql: {schema: 'courses', table: 'User'}}})
@@ -53,11 +53,8 @@ export class User extends Entity {
   })
   phone?: string;
 
-
-  @hasMany(() => UserCourse, {keyTo: 'userId'})
+  @hasMany(() => UserCourse)
   userCourses: UserCourse[];
-
-
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -68,7 +65,6 @@ export class User extends Entity {
     super(data);
   }
 }
-
 
 export interface UserRelations {
   // describe navigational properties here

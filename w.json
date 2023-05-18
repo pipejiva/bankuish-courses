@@ -1,0 +1,25 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "id": true,
+    "firstName": true,
+    "lastName": true,
+    "email": true,
+    "password": true,
+    "phone": true
+  },
+  "include": [
+    {
+      "relation": "userCourses",
+      "scope": {
+        "offset": 0,
+        "limit": 1,
+        "skip": 0,
+        "fields": {}
+      }
+    }
+  ]
+}

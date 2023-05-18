@@ -1,7 +1,7 @@
-import {Getter, inject} from '@loopback/core';
-import {DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
+import {inject, Getter} from '@loopback/core';
+import {DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
 import {MysqlDataSource} from '../datasources';
-import {User, UserCourse, UserRelations} from '../models';
+import {User, UserRelations, UserCourse} from '../models';
 import {UserCourseRepository} from './user-course.repository';
 
 export class UserRepository extends DefaultCrudRepository<
@@ -9,12 +9,14 @@ export class UserRepository extends DefaultCrudRepository<
   typeof User.prototype.id,
   UserRelations
 > {
-  public readonly userCourses: HasManyRepositoryFactory<UserCourse, typeof UserCourse.prototype.ID>;
+
+  public readonly userCourses: HasManyRepositoryFactory<UserCourse, typeof User.prototype.id>;
+
   constructor(
-    @inject('datasources.mysql') dataSource: MysqlDataSource, @repository.getter('CourseRepository') protected userCoursesRepositoryGetter: Getter<UserCourseRepository>
+    @inject('datasources.mysql') dataSource: MysqlDataSource, @repository.getter('UserCourseRepository') protected userCourseRepositoryGetter: Getter<UserCourseRepository>,
   ) {
     super(User, dataSource);
-    this.userCourses = this.createHasManyRepositoryFactoryFor('userCourses', userCoursesRepositoryGetter,);
+    this.userCourses = this.createHasManyRepositoryFactoryFor('userCourses', userCourseRepositoryGetter,);
     this.registerInclusionResolver('userCourses', this.userCourses.inclusionResolver);
   }
 }
