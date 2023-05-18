@@ -4,8 +4,6 @@ Create APP
 lb4 app
 Create mysql compose
 docker-compose up -d
-add loopback authentication with firebase
-yarn add firebase-admin @loopback/authentication @loopback/authentication-jwt
 CamelCase
 Add my
 Create table in database
@@ -13,3 +11,8 @@ Impoert  loopback-connector-mysql
 yarn add loopback-connector-mysql
 yarn build
 lb4 discover --dataSource mysql  --schema courses
+add loopback authentication with firebase
+yarn add firebase-admin @loopback/authentication @loopback/authentication-jwt
+configure all
+create jwt methods
+condigure firebase

@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import {UserCourse} from './user-course.model';
 
 @model({settings: {idInjection: false, mysql: {schema: 'courses', table: 'Course'}}})
 export class Course extends Entity {
@@ -44,6 +45,10 @@ export class Course extends Entity {
     mysql: {columnName: 'orderValue', dataType: 'int', dataLength: null, dataPrecision: 10, dataScale: 0, nullable: 'Y', generated: 0},
   })
   orderValue?: number;
+
+  @hasMany(() => UserCourse, {keyTo: 'courseId'})
+  userCourses: UserCourse[];
+
 
   // Define well-known properties here
 

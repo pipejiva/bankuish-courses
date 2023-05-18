@@ -1,5 +1,6 @@
 import {Entity, model, property} from '@loopback/repository';
-
+import {CourseWithRelations} from './course.model';
+import {UserWithRelations} from './user.model';
 @model({
   settings: {idInjection: false, mysql: {schema: 'courses', table: 'UserCourse'}}
 })
@@ -50,6 +51,8 @@ export class UserCourse extends Entity {
   })
   isCompleted?: number;
 
+
+
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -62,7 +65,8 @@ export class UserCourse extends Entity {
 }
 
 export interface UserCourseRelations {
-  // describe navigational properties here
+  user?: UserWithRelations;
+  course?: CourseWithRelations;
 }
 
 export type UserCourseWithRelations = UserCourse & UserCourseRelations;

@@ -1,0 +1,41 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {TokenService} from '@loopback/authentication';
+import { /* inject, */ BindingScope, injectable} from '@loopback/core';
+import {securityId, UserProfile} from '@loopback/security';
+import * as firebaseAdmin from "firebase-admin";
+
+class FirebaseTokenError extends Error {
+  statusCode: number
+  constructor(message: string, statusCode = 403) {
+    super(message)
+    this.statusCode = statusCode;
+  }
+}
+@injectable({scope: BindingScope.TRANSIENT})
+export class FirebaseTokenService implements TokenService {
+  constructor() { }
+  async verifyToken(token: string): Promise<UserProfile> {
+    // call the admin sdk to decode the token
+    const decodedToken = await firebaseAdmin
+      .auth()
+      .verifyIdToken(token);
+    // I cast to Record<string, any> here as I need to make
+    // some changes to the object
+    const userProfile: Record<string, any> = decodedToken;
+    // call function to return the UserProfile from
+    // decoded token
+    return this.tokenToUserProfile(userProfile);
+  }
+  tokenToUserProfile(token: Record<string, any>): UserProfile {
+    return {
+      [securityId]: token.user_id,
+      email: token.email,
+      name: token.name,
+      picture: token.picture,
+      uid: token.user_id,
+    }
+  }
+  async generateToken(userProfile: UserProfile): Promise<string> {
+    throw new FirebaseTokenError("This service is not implemented");
+  }
+}

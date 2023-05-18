@@ -1,15 +1,19 @@
+import {AuthenticationComponent} from '@loopback/authentication';
+import {JWTAuthenticationComponent, TokenServiceBindings} from '@loopback/authentication-jwt';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
-import {
-  RestExplorerBindings,
-  RestExplorerComponent,
-} from '@loopback/rest-explorer';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
+import {
+  RestExplorerBindings,
+  RestExplorerComponent
+} from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import * as dotenv from 'dotenv';
+import * as firebase from "firebase-admin";
 import path from 'path';
 import {MySequence} from './sequence';
-
+import {FirebaseTokenService} from './services';
 export {ApplicationConfig};
 
 export class BankuishCoursesApplication extends BootMixin(
@@ -17,7 +21,12 @@ export class BankuishCoursesApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
-
+    dotenv.config({path: '.env'});
+    // initialize firebase
+    firebase.initializeApp({
+      credential: firebase.credential.applicationDefault(),
+      projectId: 'bankuish-e0d72'
+    })
     // Set up the custom sequence
     this.sequence(MySequence);
 
@@ -40,5 +49,10 @@ export class BankuishCoursesApplication extends BootMixin(
         nested: true,
       },
     };
+
+    console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+    this.component(AuthenticationComponent);
+    this.component(JWTAuthenticationComponent);
+    this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(FirebaseTokenService);
   }
 }

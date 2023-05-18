@@ -4,8 +4,8 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'mysql',
   connector: 'mysql',
-  url: 'mysql://root:dhcd78sfyhdsfgv87ddhc!dcusdf9@172.19.0.2/courses',
-  host: '172.19.0.2',
+  url: 'mysql://root:dhcd78sfyhdsfgv87ddhc!dcusdf9@172.20.0.2/courses',
+  host: '172.20.0.2',
   port: 3306,
   user: 'root',
   password: 'dhcd78sfyhdsfgv87ddhc!dcusdf9',

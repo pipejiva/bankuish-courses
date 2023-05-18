@@ -30,7 +30,7 @@ export class CoursePrerequisite extends Entity {
     generated: 0,
     mysql: {columnName: 'prerequisiteId', dataType: 'int', dataLength: null, dataPrecision: 10, dataScale: 0, nullable: 'Y', generated: 0},
   })
-  prerequisiteId?: number;
+  prerequisiteId: number;
 
   // Define well-known properties here
 

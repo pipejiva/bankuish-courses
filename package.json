@@ -49,13 +49,20 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^10.0.0",
+    "@loopback/authentication-jwt": "^0.13.0",
     "@loopback/boot": "^6.0.0",
     "@loopback/core": "^5.0.0",
     "@loopback/repository": "^6.0.0",
     "@loopback/rest": "^13.0.0",
     "@loopback/rest-explorer": "^6.0.0",
     "@loopback/service-proxy": "^6.0.0",
+    "@types/request": "^2.48.8",
+    "@types/request-promise": "^4.1.48",
+    "dotenv": "^16.0.3",
+    "firebase-admin": "^11.8.0",
     "loopback-connector-mysql": "^6.2.0",
+    "request-promise": "^4.2.6",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

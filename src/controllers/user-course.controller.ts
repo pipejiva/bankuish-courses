@@ -4,27 +4,23 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {UserCourse} from '../models';
-import {UserCourseRepository} from '../repositories';
+import {CoursePrerequisiteRepository, UserCourseRepository} from '../repositories';
 
 export class UserCourseController {
   constructor(
     @repository(UserCourseRepository)
-    public userCourseRepository : UserCourseRepository,
-  ) {}
+    public userCourseRepository: UserCourseRepository,
+    @repository(CoursePrerequisiteRepository)
+    public coursePrerequisiteRepository: CoursePrerequisiteRepository,
+  ) { }
 
   @post('/user-courses')
   @response(200, {
@@ -73,7 +69,44 @@ export class UserCourseController {
   async find(
     @param.filter(UserCourse) filter?: Filter<UserCourse>,
   ): Promise<UserCourse[]> {
-    return this.userCourseRepository.find(filter);
+    const userCourses = await this.userCourseRepository.find(filter);
+    console.log(userCourses);
+    const coursePrerequisites = await this.coursePrerequisiteRepository.find();
+
+    await new Promise<void>((resolve, reject) => {
+      coursePrerequisites.sort((a, b) => {
+        if (a.prerequisiteId < b.prerequisiteId) {
+          return -1;
+        }
+        if (a.prerequisiteId > b.prerequisiteId) {
+          return 1;
+        }
+        return 0;
+      });
+      resolve();
+    });
+
+
+
+    await new Promise<void>((resolve, reject) => {
+      userCourses.sort((a, b) => {
+        const c = coursePrerequisites.findIndex(cp => cp.courseId === a.courseId);
+        const d = coursePrerequisites.findIndex(cp => cp.courseId === b.courseId);
+        if (c < d) {
+          return -1;
+        }
+        if (c > d) {
+          return 1;
+        }
+        return 0;
+      });
+      resolve();
+    });
+
+
+    console.log(userCourses);
+    console.log(coursePrerequisites);
+    return userCourses;
   }
 
   @patch('/user-courses')

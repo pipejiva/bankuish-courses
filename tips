@@ -1,0 +1,51 @@
+{
+  "email": "pipe2211@hotmail.com"
+}
+
+
+{
+  "firstName": "Felipe",
+  "lastName": "Jimenez",
+  "email": "pipe2211@homail.com",
+  "password": "xxxxxxxxxxxxxxxxxxxx",
+  "phone": "234234324"
+}
+
+{
+  "firstName": "Santiago",
+  "lastName": "Jimenez",
+  "email": "santiago@homail.com",
+  "password": "xxxxxxxxxxxxxxxxxxxx",
+  "phone": "4324"
+}
+
+
+{
+  "title": "Finance",
+  "description": "Finance",
+  "videoUrl": "Finance",
+  "orderValue": 2
+}
+
+{
+  "title": "Inversment",
+  "description": "Inversment",
+  "videoUrl": "Inversment",
+  "orderValue": 2
+}
+
+
+{
+  "title": "PortfolioTheories",
+  "description": "PortfolioTheories",
+  "videoUrl": "PortfolioTheories",
+  "orderValue": 2
+}
+
+
+{
+  "title": "InvestmentManagement",
+  "description": "InvestmentManagement",
+  "videoUrl": "InvestmentManagement",
+  "orderValue": 2
+}
