@@ -26,13 +26,14 @@ I used `nvm` to install node v16.16.0
 2. Run `docker ps` and check the MySQL <container_ID>
 3. Get the container IP `docker inspect   -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_ID>`
 4. Add connection values to `.env` file
-   -HOST (Container IP)
-   -PORT
-   -USER
-   -PASSWORD
-   -DATABASE
 
-
+```
+   -DB_HOST (Container IP)
+   -DB_PORT
+   -DB_USER
+   -DB_PASSWORD
+   -DB_DATABASE
+```
 ## Install dependencies
 
 By default, dependencies were installed when this application was generated.
@@ -58,11 +59,16 @@ Open http://localhost:3000/explorer in your browser.
 2. Write on the request body  `{"email": "pipe2211@hotmail.com"}`and click in execute
 3. Click on "Authorize" at the top of the page
 4. Paste the JWT in the field value
+   Note: Just UserController and CourseController have authentication requirement
 
-## Populate database
+## Database
+[Database Diagram](https://drive.google.com/file/d/1rw-BPAoLzCj1TACkdry2Rqh0-U0zKaSl/view?usp=share_link)
+
+
+### Populate database
 
 1. The application must be running and connected to the database
-2. Open the "GET" method http://localhost:3000/populate
+2. Open the "GET" method `http://localhost:3000/explorer/#/PopulateController/PopulateController.find`
 
 
 ## Build or rebuild the project
@@ -84,6 +90,10 @@ yarn run rebuild
 ```sh
 yarn test
 ```
+
+## Courses prerequisites per user
+The method `http://localhost:3000/explorer/#/UserController/UserController.findUserCoursesById` gets the courses per user based on the prerequisites.
+
 ## Documentation
 
 API documentation is automatically generated using OpenAPI specifications. Start the application and access the documentation at `http://localhost:3000/explorer`.
