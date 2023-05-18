@@ -1,7 +1,37 @@
-# bankuish-courses
+# Bankuish Courses API
 
-This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
-[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
+
+## Features
+- **Modular Architecture**: Uses a modular architecture, allowing easy separation of concerns and code reuse.
+- **Database Integration**: Easily integrates with MySQL.
+- **Authentication and Authorization**: Provides mechanisms for user authentication and authorization in this case with Firebase.
+- **Testing and Documentation**: Supports testing with tools like Jest and generates API documentation using OpenAPI specifications.
+
+## Prerequisites
+
+I used `nvm` to install node v16.16.0
+
+- Docker
+- Node.js (version v16.16.0 LTS)
+- npm (version 8.11.0)
+- SQL database running
+
+## Configuration
+
+1. Rename the `.env.example` file to `.env` and update the configuration values based on your needs.
+
+## Configure SQL database
+
+1. Run `docker-compose up -d`
+2. Run `docker ps` and check the MySQL <container_ID>
+3. Get the container IP `docker inspect   -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_ID>`
+4. Add connection values to `.env` file
+   -HOST (Container IP)
+   -PORT
+   -USER
+   -PASSWORD
+   -DATABASE
+
 
 ## Install dependencies
 
@@ -13,16 +43,28 @@ yarn install
 ```
 
 ## Run the application
+```sh
+yarn run build
+```
 
 ```sh
 yarn start
 ```
+Open http://localhost:3000/explorer in your browser.
 
-You can also run `node .` to skip the build step.
+## Populate database
 
-Open http://127.0.0.1:3000 in your browser.
+1. The application must be running and connected to the database
+2. Open the "GET" method http://localhost:3000/populate
 
-## Rebuild the project
+## Authentication
+1. Open http://localhost:3000/explorer/#/TokenController/TokenController.generateToken in your browser.
+2. Write on the request body  `{"email": "pipe2211@hotmail.com"}`and click in execute
+3. Click on "Authorize" at the top of the page
+4. Paste the JWT in the field value
+
+
+## Build or rebuild the project
 
 To incrementally build the project:
 
@@ -36,34 +78,15 @@ To force a full build by cleaning up cached artifacts:
 yarn run rebuild
 ```
 
-## Fix code style and formatting issues
-
-```sh
-yarn run lint
-```
-
-To automatically fix such issues:
-
-```sh
-yarn run lint:fix
-```
-
-## Other useful commands
-
-- `yarn run migrate`: Migrate database schemas for models
-- `yarn run openapi-spec`: Generate OpenAPI spec into a file
-- `yarn run docker:build`: Build a Docker image for this application
-- `yarn run docker:run`: Run this application inside a Docker container
-
 ## Tests
 
 ```sh
 yarn test
 ```
+## Documentation
 
-## What's next
+API documentation is automatically generated using OpenAPI specifications. Start the application and access the documentation at `http://localhost:3000/explorer`.
 
-Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
-understand how you can continue to add features to this application.
+## Support
 
-[![LoopBack](https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+If you have any questions, issues, or feature requests, please contact me at [pipe2211@hotmail.com](mailto:pipe2211@hotmail.com).
