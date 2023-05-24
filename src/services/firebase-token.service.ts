@@ -1,6 +1,6 @@
 import {TokenService} from '@loopback/authentication';
 import { /* inject, */ BindingScope, injectable} from '@loopback/core';
-import {securityId, UserProfile} from '@loopback/security';
+import {UserProfile, securityId} from '@loopback/security';
 import * as firebaseAdmin from "firebase-admin";
 const request = require("request-promise");
 

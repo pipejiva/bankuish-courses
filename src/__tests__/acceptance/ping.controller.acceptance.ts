@@ -1,21 +1,31 @@
-import {Client, expect} from '@loopback/testlab';
-import {BankuishCoursesApplication} from '../..';
-import {setupApplication} from './test-helper';
+/*import {
+  createStubInstance,
+  expect,
+  sinon,
+  StubbedInstanceWithSinonAccessor
+} from '@loopback/testlab';
+import {CourseController} from '../../controllers';
+import {CourseRepository} from '../../repositories';
 
-describe('PingController', () => {
-  let app: BankuishCoursesApplication;
-  let client: Client;
+describe('CourseController (unit)', () => {
+  let repository: StubbedInstanceWithSinonAccessor<CourseRepository>;
+  beforeEach(givenStubbedRepository);
 
-  before('setupApplication', async () => {
-    ({app, client} = await setupApplication());
+  describe('getDetails()', () => {
+    it('retrieves details of a product', async () => {
+      const controller = new CourseController(repository);
+      repository.stubs.find.resolves([{name: 'Pen', slug: 'pen'}]);
+
+      const details = await controller.find('pen');
+
+      expect(details).to.containEql({name: 'Pen', slug: 'pen'});
+      sinon.assert.calledWithMatch(repository.stubs.find, {
+        where: {slug: 'pen'},
+      });
+    });
   });
 
-  after(async () => {
-    await app.stop();
-  });
-
-  it('invokes GET /ping', async () => {
-    const res = await client.get('/ping?msg=world').expect(200);
-    expect(res.body).to.containEql({greeting: 'Hello from LoopBack'});
-  });
-});
+  function givenStubbedRepository() {
+    repository = createStubInstance(CourseRepository);
+  }
+*/
